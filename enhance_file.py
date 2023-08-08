@@ -36,7 +36,6 @@ class AudioEnhancer:
             model.set_tensor(input_details[0]['index'], frame)
             model.invoke()
             enhanced_frame = model.get_tensor(output_details[0]['index'])
-            self.sid_to_frames[session_id].append((index, enhanced_frame))
             self.processed_frames_queue.put((index, enhanced_frame, session_id))
 
     def _sort_frames_by_sid(self):
