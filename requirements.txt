@@ -1,8 +1,11 @@
 tensorflow
-pydantic
 pydantic-settings
 waiting
 uvicorn
 pydub
-fastapi
+fastapi==0.101.0
+pydantic==2.1.1
 httpx
+pip~=21.1.2
+wheel~=0.36.2
+setuptools~=57.0.0
