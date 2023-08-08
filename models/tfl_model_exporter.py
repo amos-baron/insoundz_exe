@@ -12,4 +12,4 @@ def export_to_tflite(saved_model_path, tflite_model_path):
 
 if __name__ == "__main__":
     # Call the function to export the model to TFLite
-    export_to_tflite('passthrough_model', 'models/passthrough_model_lite.tflite')
+    export_to_tflite('passthrough_model', 'passthrough_model_lite.tflite')
