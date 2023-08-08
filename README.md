@@ -15,8 +15,8 @@
  ## Run it as script ##
   - to run it as a script you should use the Terminal with the requiered flags
   *  for example if you are in the root directory of the repo:
-    ##### run it with #####
-   ```python models/enhance_file.py --source-file audio_samples/audio_file_48k.raw --destination-file enhanced_audio.raw --model-path models/passthrough_model_lite.tflite``` 
+  ##### run it with #####
+  ```python models/enhance_file.py --source-file audio_samples/audio_file_48k.raw --destination-file enhanced_audio.raw --model-path models/passthrough_model_lite.tflite``` 
 
 ## Farther explanation on how it works ##
   ### AudioEnhancer class ### 
@@ -36,8 +36,8 @@
   - reconstructs audio and returns it
 # main.py 
   This file contains the login for the RESTfull api that recieves POST requests to enhance file, you should download requierments from the requierments.txt file.
-    ##### run it with #####
-      ```python main.py```
+  ##### run it with #####
+  ```python main.py```
 
   After that you can go to "http://127.0.0.1:8080/docs" for more documentation on how to interact with the api 
 
@@ -45,7 +45,7 @@
 # test_api.py 
 unittests for correct basic input validation of the api, we can also use "http://127.0.0.1:8080/docs".
   ##### run it with #####
-      ```python test_api.py```
+  ```python test_api.py```
 
 
    
