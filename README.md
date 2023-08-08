@@ -1,10 +1,13 @@
 # passthrough_model.py
   This file contains the model and if it is run as a script the model will be saved inside the same dir inside passthrough_model. 
-     ```python passthrough_model.py```
+  ##### run it with #####
+  ```python passthrough_model.py```
 # tfl_model_exporter.py 
   This file contains a function export_to_tflite that recieves a saved_model_path and a destination path and exports the model to tensorflowlite.
   
   by default it saves it to "passthrough_model_lite.tflite" the saved_model_path should be the same as the path where "passthrough_model.py" saves the model.
+
+    ##### run it with #####
     ```python tfl_model_exporter.py```
     
 # enhance_file.py 
@@ -12,7 +15,7 @@
  ## Run it as script ##
   - to run it as a script you should use the Terminal with the requiered flags
   *  for example if you are in the root directory of the repo:
-  
+    ##### run it with #####
    ```python models/enhance_file.py --source-file audio_samples/audio_file_48k.raw --destination-file enhanced_audio.raw --model-path models/passthrough_model_lite.tflite``` 
 
 ## Farther explanation on how it works ##
@@ -32,14 +35,16 @@
   - waits until all frames are processed
   - reconstructs audio and returns it
 # main.py 
-  This file contains the login for the RESTfull api that recieves POST requests to enhance file, you should download requierments from the requierments.txt file and run it with:
+  This file contains the login for the RESTfull api that recieves POST requests to enhance file, you should download requierments from the requierments.txt file.
+    ##### run it with #####
       ```python main.py```
 
   After that you can go to "http://127.0.0.1:8080/docs" for more documentation on how to interact with the api 
 
 
 # test_api.py 
-unittests for correct basic input validation of the api, we can also use "http://127.0.0.1:8080/docs"  run it with:
+unittests for correct basic input validation of the api, we can also use "http://127.0.0.1:8080/docs".
+  ##### run it with #####
       ```python test_api.py```
 
 
