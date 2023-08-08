@@ -35,7 +35,7 @@
   - waits until all frames are processed
   - reconstructs audio and returns it
 # main.py 
-  This file contains the login for the RESTfull api that recieves POST requests to enhance file, you should download requierments from the requierments.txt file.
+  This file contains the logic for the RESTfull api that recieves POST requests to enhance file, you should download requierments from the requierments.txt file.
   ##### run it with #####
   ```python main.py```
 
