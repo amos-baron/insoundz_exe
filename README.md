@@ -23,6 +23,7 @@
   - the class instance also spawns Y threads (by default 1 as its not labour intensive) 
   - each thread  trys to fetch processed_frames from the processed_frames_queue continuously
   - once it fetches the frame it sorts it into a list using a session_id
+  ##### in the future we might want to implement a PriorityQueue for the processed_frames and unprocessed_frames queues for optimization 
   #### process_audio method ####
   - the class has a method named process_audio
   - it gets a session_id and an unprocessed_audio
