@@ -48,5 +48,5 @@ Within each individual process, multithreading is used to further optimize the p
 
 1. **Processing**: As each thread within a process fetches an unprocessed frame, it sends that frame through the model to enhance it. The enhanced frame is then pushed into the `processed_frames_queue`.
 
-2. **Reconstruction**: the **enhance_audio** function is responsible for seperating the audio into frames and pushing the frames into the  **Unprocessed Frame Queue (`unprocessed_frames_queue`)**, it gets the audio and a session_id as parameters
+2. **Reconstruction**: the **enhance_audio** function is responsible for seperating the audio into frames and pushing the frames into the  **unprocessed_frames_queue**, it gets the audio and a session_id as parameters
 
