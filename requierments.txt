@@ -1,0 +1,8 @@
+tensorflow
+pydantic
+pydantic-settings
+waiting
+uvicorn
+pydub
+unittest
+httpx
