@@ -4,8 +4,9 @@
 # tfl_model_exporter.py 
   This file contains a function export_to_tflite that recieves a saved_model_path and a destination path and exports the model to tensorflowlite.
   
-  by default it saves it to passthrough_model_lite.tflite the saved_model_path should be the same as the path where "passthrough_model.py" saves the model.
+  by default it saves it to "passthrough_model_lite.tflite" the saved_model_path should be the same as the path where "passthrough_model.py" saves the model.
     ```python tfl_model_exporter.py```
+    
 # enhance_file.py 
  This file can act as a script that accepts Arguments and also contains a class that can be imported and used in other modules 
  ## Run it as script ##
