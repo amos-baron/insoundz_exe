@@ -1,4 +1,5 @@
 import logging
+from scipy import signal
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 
@@ -12,7 +13,8 @@ def convert_to_required_format(raw_data, desired_sample_rate, original_sample_ra
     logging.info(f"Converting sample rate from {original_sample_rate} to {desired_sample_rate}")
 
     # Sample rate convertion should happen here
-    resampled_audio = raw_data
+    resampling_factor = desired_sample_rate / original_sample_rate
+    resampled_audio = signal.resample(raw_data, int(len(raw_data) * resampling_factor))
 
     logging.info("Sample rate conversion completed.")
 
