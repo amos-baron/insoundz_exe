@@ -1,22 +1,44 @@
 import argparse
+import queue
+
 import numpy as np
 import tensorflow as tf
-from multiprocessing import Process, Queue, cpu_count
+from multiprocessing import Process, Queue, cpu_count,active_children
 from waiting import wait
 from collections import defaultdict
-from threading import Thread
+from threading import Thread,Event
+import logging
+import atexit
+import sys
+
+logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
 
 
 class AudioEnhancer:
     def __init__(self, model_path: str, num_processes: int = None, num_threads: int = 1):
         self.model_path = model_path
-        self.num_threads = num_threads
         self.num_processes = num_processes or cpu_count()
         self.unprocessed_frames_queue = Queue()
         self.processed_frames_queue = Queue()
         self.sid_to_frames = defaultdict(list)
         self._create_processes(self.num_processes)
+        self.num_threads = num_threads
+        self.stop_thread = Event()
         self._create_threads(self.num_threads)
+        logging.info("AudioEnhancer initialized.")
+
+    def terminate(self):
+        logging.info("Terminating processes")
+
+        active_child_processes = active_children()
+        for child_process in active_child_processes:
+            logging.info(f"Terminating child process: {child_process.name}")
+            child_process.terminate()
+            child_process.join()  # Wait for the child process to finish
+        logging.info(f"Terminated all child processes")
+        self.stop_thread.set()
+        logging.info(f"stopped threads")
+
 
     def _process_audio_frame(self):
         model = self.load_tflite_model(self.model_path)
@@ -39,12 +61,16 @@ class AudioEnhancer:
             self.processed_frames_queue.put((index, enhanced_frame, session_id))
 
     def _sort_frames_by_sid(self):
-        while True:
-            frame_idx, enhanced_frame, session_id = self.processed_frames_queue.get()
-            self.sid_to_frames[session_id].append((frame_idx, enhanced_frame))
+        while not self.stop_thread.is_set():
+            try:
+                frame_idx, enhanced_frame, session_id = self.processed_frames_queue.get(timeout=1)
+                self.sid_to_frames[session_id].append((frame_idx, enhanced_frame))
+            except queue.Empty:
+                pass
 
     def _create_threads(self, num_threads):
         # Create n threads that are continuously sorting processed frames
+        self.stop_thread.clear()
         for _ in range(num_threads):
             t = Thread(target=self._sort_frames_by_sid)
             t.start()
@@ -96,28 +122,45 @@ def main() -> None:
                         help='Number of processes to use for multiprocessing')
     parser.add_argument('--frame-length', type=int, default=1024, help='Frame length for audio processing')
     args = parser.parse_args()
-    # Create the AudioEnhancer object
-    enhancer = AudioEnhancer(args.model_path)
+    try:
+        # Create the AudioEnhancer object
+        enhancer = AudioEnhancer(args.model_path)
 
-    # Load the audio file
-    audio_data = load_audio_file(args.source_file)
+        # Load the audio file
+        audio_data = load_audio_file(args.source_file)
 
-    # Enhance the audio using multiprocessing
-    enhanced_audio = enhancer.enhance_audio(audio_data=audio_data,
-                                            frame_length=args.frame_length)
+        # Enhance the audio using multiprocessing
+        enhanced_audio = enhancer.enhance_audio(audio_data=audio_data,
+                                                frame_length=args.frame_length)
 
-    # Save the enhanced audio to the destination file
-    save_audio_file(args.destination_file, enhanced_audio)
+        # Save the enhanced audio to the destination file
+        save_audio_file(args.destination_file, enhanced_audio)
+    except FileNotFoundError as e:
+        logging.error(f"File not found: {e.filename}")
+    except PermissionError as e:
+        logging.error(f"Permission error: {e}")
+    except Exception as e:
+        logging.error(f"An error occurred: {e}")
+    finally:
+        enhancer.terminate()
+        sys.exit()
+
+
+# Register a function to run at program exit
+atexit.register(main)
+
 
 def load_audio_file(filename: str) -> np.ndarray:
     with open(filename, 'rb') as f:
         audio_data = np.frombuffer(f.read(), dtype=np.float32)
+    logging.info(f"File loaded: {filename}")
     return audio_data
 
 
 def save_audio_file(filename: str, audio_data: np.ndarray) -> None:
     with open(filename, 'wb') as f:
         f.write(audio_data.tobytes())
+    logging.info(f"File saved: {filename}")
 
 
 if __name__ == "__main__":
