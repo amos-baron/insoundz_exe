@@ -7,8 +7,8 @@
   
   by default it saves it to "passthrough_model_lite.tflite" the saved_model_path should be the same as the path where "passthrough_model.py" saves the model.
 
-    ##### run it with #####
-    ```python tfl_model_exporter.py```
+  ##### run it with #####
+  ```python tfl_model_exporter.py```
     
 # enhance_file.py 
  This file can act as a script that accepts Arguments and also contains a class that can be imported and used in other modules 
