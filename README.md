@@ -40,8 +40,6 @@ Multiprocessing involves dividing the workload into multiple independent process
 2. **Processed Frame Queue (`processed_frames_queue`)**: After each process completes enhancing a frame, the enhanced frame is pushed into the `processed_frames_queue`. This queue stores the enhanced frames in the order they were processed.
 
 
-Within each individual process, multithreading is used to further optimize the processing efficiency.
-
 **Sorting and Reconstructing**: Another set of threads (usually just one) is dedicated to fetching enhanced frames from the `processed_frames_queue`. These threads organize the frames based on session IDs. Each frame is associated with a session ID that helps order the frames correctly for reconstruction..
 
 ### Frame Processing and Audio Reconstruction:
