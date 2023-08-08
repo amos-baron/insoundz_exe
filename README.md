@@ -48,3 +48,19 @@ Multiprocessing involves dividing the workload into multiple independent process
 
 2. **Reconstruction**: the **enhance_audio** function is responsible for seperating the audio into frames and pushing the frames into the  **unprocessed_frames_queue**, it gets the audio and a session_id as parameters
 
+
+
+### Audio Manipulations Helper Module
+
+
+#### Features
+
+##### 1. `convert_to_required_format`
+
+This function allows you to perform sample rate conversion on audio data. It takes the following parameters:
+
+- `raw_data`: The input audio data in its raw form.
+- `desired_sample_rate`: The target sample rate to which you want to convert the audio.
+- `original_sample_rate`: The original sample rate of the input audio data.
+
+If the `desired_sample_rate` matches the `original_sample_rate`, the function returns the raw data as is. Otherwise, it uses scipy's signal processing library for sample rate conversion. The resampling factor is calculated based on the desired and original sample rates, and the input audio data is resampled accordingly.
