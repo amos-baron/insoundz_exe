@@ -37,6 +37,8 @@
 
 
 # test_api.py 
-unittests for correct basic input validation of the api, we can also use "http://127.0.0.1:8080/docs"
+unittests for correct basic input validation of the api, we can also use "http://127.0.0.1:8080/docs"  run it with:
+      ```python test_api.py```
+
 
    
