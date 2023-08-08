@@ -4,5 +4,5 @@ pydantic-settings
 waiting
 uvicorn
 pydub
-unittest
+fastapi
 httpx
