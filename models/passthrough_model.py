@@ -14,4 +14,4 @@ if __name__ == "__main__":
     model = passthrough_x3()
 
     # Save the model in SavedModel format
-    model.save('models/passthrough_model')
+    model.save('passthrough_model')
