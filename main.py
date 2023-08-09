@@ -14,7 +14,7 @@ from helpers.audio_manipulators import convert_to_required_format
 APP_INTERFACE = settings.app_interface
 APP_PORT = settings.app_port
 MODEL_PATH = settings.tf_model_path
-DESIRED_SAMPLE_RATE = 48000
+DESIRED_SAMPLE_RATE = settings.desired_sample_rate
 app = FastAPI()
 
 logging.config.fileConfig('logging.conf', disable_existing_loggers=False)
